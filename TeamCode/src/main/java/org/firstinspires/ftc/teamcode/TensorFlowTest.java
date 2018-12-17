@@ -27,48 +27,27 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import java.util.List;
+
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
-import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
-/**
- * This 2018-2019 OpMode illustrates the basics of using the TensorFlow Object Detection API to
- * determine the position of the gold and silver minerals.
- *
- * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list.
- *
- * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
- * is explained below.
- */
+import java.util.List;
+
 @TeleOp(name = "Concept: TensorFlow Object Detection", group = "Concept")
-@Disabled
-public class ConceptTensorFlowObjectDetection extends LinearOpMode {
+
+public class TensorFlowTest extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
-
-    /*
-     * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
-     * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
-     * A Vuforia 'Development' license key, can be obtained free of charge from the Vuforia developer
-     * web site at https://developer.vuforia.com/license-manager.
-     *
-     * Vuforia license keys are always 380 characters long, and look as if they contain mostly
-     * random data. As an example, here is a example of a fragment of a valid key:
-     *      ... yIgIzTqZ4mWjk9wd3cZO9T1axEqzuhxoGlfOOI2dRzKS4T0hQ8kT ...
-     * Once you've obtained a license key, copy the string from the Vuforia web site
-     * and paste it in to your code on the next line, between the double quotes.
-     */
-    private static final String VUFORIA_KEY = " ATT7wQb/////AAAAGb+seHrT4EU0h1e3FXROmeMQoCAjMgbsuk2Push7du+ijYP+uh2cp3E5jNLy2EiF2ecgKoOhp1g7YeaQGkFoWq3M4khj16tP/qLs+h7v2sI8BKGZAp3vTOn0ghr5UYfH7nUHgGcKgUOoK6+qGXqCCBR+2vyct1qMkptRscVdKAhXoja1non0eU30CdvtCthNoyOZ5uRFwpD61c92Btodf61sBQC/koYmhq99Ce4R858k1KzNSflN0WeWAmVF6UVP9AcJ+k63Fus9nGCuyw9wSfnxpO5AkfxUKfgJg2Xy2SPsF0D/Zkwgo46Rj77oCvTehULoyiCzzTvwGC+f+5Z7MNnOcpOKJw/TTNOWqHUpQLG1 ";
+    private static final String VUFORIA_KEY = "ATT7wQb/////AAAAGb+seHrT4EU0h1e3FXROmeMQoCAjMgbsuk2Push7du+ijYP+uh2cp3E5jNLy2EiF2ecgKoOhp1g7YeaQGkFoWq3M4khj16tP/qLs+h7v2sI8BKGZAp3vTOn0ghr5UYfH7nUHgGcKgUOoK6+qGXqCCBR+2vyct1qMkptRscVdKAhXoja1non0eU30CdvtCthNoyOZ5uRFwpD61c92Btodf61sBQC/koYmhq99Ce4R858k1KzNSflN0WeWAmVF6UVP9AcJ+k63Fus9nGCuyw9wSfnxpO5AkfxUKfgJg2Xy2SPsF0D/Zkwgo46Rj77oCvTehULoyiCzzTvwGC+f+5Z7MNnOcpOKJw/TTNOWqHUpQLG1";
 
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
