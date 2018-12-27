@@ -101,3 +101,38 @@ public class DriveAndArm extends OpMode
         }
     }
 }
+
+
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+@Autonomous
+
+public class Mineral extends LinearOpMode
+{
+    DcMotor FrontLeft;
+    DcMotor FrontRight;
+    DcMotor BackLeft;
+    DcMotor BackRight;
+    DcMotor Arm;
+    ElapsedTime Time = new ElapsedTime();
+    
+    public void runOpMode();
+    {
+        FrontLeft = hardwareMap.dcMotor.get("FrontLeft");
+        FrontRight = hardwareMap.dcMotor.get("FrontRight");
+        BackLeft = hardwareMap.dcMotor.get("");
+        BackRight = hardwareMap.dcMotor.get("");
+        
+        waitForStart();
+        Time.reset();
+        while(opModeIsActive())
+        {
+            
+        }
+    }
+}
