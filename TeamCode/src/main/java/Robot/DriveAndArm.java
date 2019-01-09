@@ -1,8 +1,6 @@
 package Robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -15,6 +13,7 @@ public class DriveAndArm extends OpMode
     private DcMotor BackRight;
     private DcMotor Arm;
     private DcMotor Elbow;
+    private DcMotor Elbow2;
 
     //Creates new Elapsed time so that time elapsed can be seen on the driver station
     ElapsedTime Time = new ElapsedTime();
@@ -28,15 +27,19 @@ public class DriveAndArm extends OpMode
         BackRight = hardwareMap.dcMotor.get("BackRight");
         Arm = hardwareMap.dcMotor.get("Arm");
         Elbow = hardwareMap.dcMotor.get("Elbow");
+        Elbow2 = hardwareMap.dcMotor.get("Elbow2");
 
         /*Makes sure right motors go in Reverse always so no later power
         values have to be inverted.*/
         FrontRight.setDirection(DcMotor.Direction.REVERSE);
         BackRight.setDirection(DcMotor.Direction.REVERSE);
+        Elbow2.setDirection(DcMotor.Direction.REVERSE);
         Arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Elbow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Elbow2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Elbow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Elbow2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         telemetry.addLine("Status: Ready");
     }
@@ -47,6 +50,7 @@ public class DriveAndArm extends OpMode
         Time.reset();
         Arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Elbow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Elbow2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     public void loop()
     {
@@ -79,11 +83,13 @@ public class DriveAndArm extends OpMode
         {
             ArmMove(Arm, 0, 1);
             ArmMove(Elbow, 0, 1);
+            ArmMove(Elbow2, 144, 1);
         }
         if (gamepad1.y)
         {
-            ArmMove(Arm, 144,1);
+            ArmMove(Arm, 700,1);
             ArmMove(Elbow, 144, 1);
+            ArmMove(Elbow2, 144, 1);
         }
 
         //Shows Telemetry data on the driver station
