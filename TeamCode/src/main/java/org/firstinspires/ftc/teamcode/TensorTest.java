@@ -1,9 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
+import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
@@ -23,21 +22,57 @@ public class TensorTest extends LinearOpMode {
     private VuforiaLocalizer vuforia;
     private TFObjectDetector tfod;
 
+    private DcMotor frontLeft;
+    private DcMotor frontRight;
+    private DcMotor backLeft;
+    private DcMotor backRight;
+
     @Override
     public void runOpMode()
     {
         initEngine();
         runEngine();
+
+        frontLeft = hardwareMap.dcMotor.get("Front Left");
+        frontRight = hardwareMap.dcMotor.get("Front Right");
+        backLeft = hardwareMap.dcMotor.get("Back Left");
+        backRight = hardwareMap.dcMotor.get("Back Right");
+
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
+
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         waitForStart();
 
         while (opModeIsActive())
         {
             switch (goldPosition){
                 case -1:
+                    moveDistance(144, 0.5, frontLeft);
+                    moveDistance(144, 0.5, frontRight);
+                    moveDistance(144, 0.5, backLeft);
+                    moveDistance(144, 0.5, backRight);
                     break;
                 case 0:
+                    moveDistance(288, 0.5, frontLeft);
+                    moveDistance(288, 0.5, frontRight);
+                    moveDistance(288, 0.5, backLeft);
+                    moveDistance(288, 0.5, backRight);
                     break;
                 case 1:
+                    moveDistance(432, 0.5, frontLeft);
+                    moveDistance(432, 0.5, frontRight);
+                    moveDistance(432, 0.5, backLeft);
+                    moveDistance(432, 0.5, backRight);
                     break;
             }
 
@@ -91,7 +126,9 @@ public class TensorTest extends LinearOpMode {
             tfod.activate();
             // getUpdatedRecognitions() will return null if no new information is available since
             // the last time that call was made.
+
             List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+
             if (updatedRecognitions != null) {
                 telemetry.addData("# Object Detected", updatedRecognitions.size());
                 if (updatedRecognitions.size() >= 2) {
@@ -127,5 +164,19 @@ public class TensorTest extends LinearOpMode {
             sleep(500);
             tfod.shutdown();
         }
+    }
+    public void turnDegrees(int degrees, double power)
+    {
+
+    }
+    public void moveDistance(int ticks, double power, DcMotor Motor)
+    {
+        Motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Motor.setTargetPosition(ticks);
+        Motor.setPower(power);
+    }
+    public void moveArm()
+    {
+
     }
 }
